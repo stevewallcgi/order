@@ -1,17 +1,15 @@
 package orderManagement;
 
+
 public class Location {
-	LocationValidity valid;
+	private long id; 
 
-	public Location(LocationValidity locationValidity) {
-		setValid(locationValidity);
+	public Location(long id) {
+		this.id = id;
 	}
 
-	public LocationValidity getValid() {
-		return valid;
+	public long getId() {
+		return id;
 	}
 
-	public void setValid(LocationValidity valid) {
-		this.valid = valid;
-	}
 }

@@ -16,18 +16,18 @@ public class OrderController {
     
     @RequestMapping(method=RequestMethod.PUT, value="/orders")
     public Order updateOrder(@RequestBody Order order ) {
-        return new Order(order.getId(), order.isValidOrder(), order.isValidLocation());
+        return new Order(order.getId());
     }
     
     @RequestMapping("/orders/{id}/valid")
     public OrderValidity orderValid(@PathVariable("id") int orderId) {
     	Order order = new Order(orderId);
-    	return order.getValid();
+    	return OrderValidator.validateOrder(order);
     }
     
     @RequestMapping("/orders/{id}/location/valid")
-    public LocationValidity locationValid(@PathVariable("id") int orderId) {
+    public LocationValidity locationValid(@PathVariable("id") long orderId) {
     	Order order = new Order(orderId);
-    	return order.getLocation().getValid();
+    	return LocationValidator.validLocation(order.getLocation());
     }
 }
