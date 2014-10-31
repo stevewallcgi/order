@@ -1,0 +1,9 @@
+---
+applications:
+- name: orderMgmt
+  memory: 512M
+  instances: 1
+  host: orderMgmt-dev
+  path: target/order-0.0.1-SNAPSHOT.war
+  buildpack: https://github.com/stevewallecs/java-buildpack.git
+
