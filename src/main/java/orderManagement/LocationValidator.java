@@ -9,10 +9,10 @@ public class LocationValidator {
 		LocationValidity locationValidity;
 		
         if ((location.getId() % 2) == 0) {
-        	locationValidity =  new LocationValidity(true, null);
+        	locationValidity =  new LocationValidity(location, true, null);
         } else {
         	List<String> errors = new ArrayList<String>(Arrays.asList("Error 1", "Error 2"));
-        	locationValidity = new LocationValidity(false, errors);
+        	locationValidity = new LocationValidity(location, false, errors);
         }
         
         return locationValidity;
