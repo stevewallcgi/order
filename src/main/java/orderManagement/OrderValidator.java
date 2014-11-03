@@ -9,10 +9,10 @@ public class OrderValidator {
 		OrderValidity orderValidity;
 		
         if ((order.getId() % 2) == 0) {
-        	orderValidity =  new OrderValidity(true, null);
+        	orderValidity =  new OrderValidity(order, true, null);
         } else {
         	List<String> errors = new ArrayList<String>(Arrays.asList("Error 1", "Error 2"));
-        	orderValidity = new OrderValidity(false, errors);
+        	orderValidity = new OrderValidity(order, false, errors);
         }
         
         return orderValidity;

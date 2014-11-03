@@ -5,6 +5,7 @@ import java.util.List;
 public class OrderValidity {
 	boolean valid;
 	List<String> errors;
+	Order order;
 	
 	public boolean isValid() {
 		return valid;
@@ -23,9 +24,10 @@ public class OrderValidity {
 	}
 
 	
-	public OrderValidity(boolean validIn, List<String> errorsIn) {
-		valid = validIn;
-		errors = errorsIn;
+	public OrderValidity(Order order, boolean valid, List<String> errors) {
+		this.order = order;
+		this.valid = valid;
+		this.errors = errors;
 	}
 
 }
