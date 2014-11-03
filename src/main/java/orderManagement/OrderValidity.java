@@ -6,6 +6,12 @@ public class OrderValidity {
 	boolean valid;
 	List<String> errors;
 	Order order;
+
+	public OrderValidity(Order order, boolean valid, List<String> errors) {
+		this.order = order;
+		this.valid = valid;
+		this.errors = errors;
+	}
 	
 	public boolean isValid() {
 		return valid;
@@ -24,10 +30,12 @@ public class OrderValidity {
 	}
 
 	
-	public OrderValidity(Order order, boolean valid, List<String> errors) {
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
 		this.order = order;
-		this.valid = valid;
-		this.errors = errors;
 	}
 
 }
