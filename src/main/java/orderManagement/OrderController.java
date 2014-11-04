@@ -1,5 +1,8 @@
 package orderManagement;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OrderController {
+	
+	Map<Long, Order> orders = new HashMap<Long, Order>();
     
     @RequestMapping(method=RequestMethod.GET, value="/orders/{id}")
     public Order getOrder(@PathVariable("id") int orderId) {
@@ -16,7 +21,8 @@ public class OrderController {
     
     @RequestMapping(method=RequestMethod.PUT, value="/orders")
     public Order updateOrder(@RequestBody Order order ) {
-        return new Order(order.getId());
+    	order.setLocation(new Location(order.getId()));
+        return order;
     }
     
     @RequestMapping("/orders/{id}/valid")

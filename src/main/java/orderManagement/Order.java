@@ -4,6 +4,7 @@ package orderManagement;
 public class Order {
 	
     private long id;
+    private OrderStatus status = OrderStatus.OPEN;
     private Location location;
 
     public Order() {
@@ -22,6 +23,14 @@ public class Order {
     public void setId(long id) {
     	this.id = id;
     }
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = OrderStatus.valueOf(status);
+	}
 
 	public Location getLocation() {
 		return location;
