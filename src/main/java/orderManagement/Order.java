@@ -1,7 +1,9 @@
 package orderManagement;
 
 
-public class Order {
+
+
+public class Order{
 	
     private long id;
     private OrderStatus status = OrderStatus.OPEN;
@@ -38,5 +40,9 @@ public class Order {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	
+	public static Order valueOf(String value) {
+		return new Order(Long.valueOf(value));
 	}
 }
