@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OrderValidator {
-	public static OrderValidity validateOrder(Order order) {        
-		OrderValidity orderValidity;
+	public static OrderValidation validateOrder(Order order) {        
+		OrderValidation orderValidity;
 		
         if ((order.getId() % 2) == 0) {
-        	orderValidity =  new OrderValidity(order, true, null);
+        	orderValidity =  new OrderValidation(order, true, null);
         } else {
         	List<String> errors = new ArrayList<String>(Arrays.asList("Error 1", "Error 2"));
-        	orderValidity = new OrderValidity(order, false, errors);
+        	orderValidity = new OrderValidation(order, false, errors);
         }
         
         return orderValidity;

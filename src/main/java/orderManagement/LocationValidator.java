@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LocationValidator {
-	public static LocationValidity validLocation(Location location) {
+	public static LocationValidity validLocation(Order order) {
 		LocationValidity locationValidity;
 		
-        if ((location.getId() % 2) == 0) {
-        	locationValidity =  new LocationValidity(location, true, null);
+        if ((order.getId() % 2) == 0) {
+        	locationValidity =  new LocationValidity(order, true, null);
         } else {
         	List<String> errors = new ArrayList<String>(Arrays.asList("Error 1", "Error 2"));
-        	locationValidity = new LocationValidity(location, false, errors);
+        	locationValidity = new LocationValidity(order, false, errors);
         }
         
         return locationValidity;

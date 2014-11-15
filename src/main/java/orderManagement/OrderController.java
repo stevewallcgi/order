@@ -29,7 +29,7 @@ public class OrderController {
 	@Autowired EntityLinks entityLinks;
 
     
-    @RequestMapping(method=RequestMethod.GET, value="/{id}", produces="application/json")
+    @RequestMapping(method=RequestMethod.GET, value="/{id}", produces="application/hal+json")
     public ResponseEntity<Resource<Order>> get(@PathVariable("id") long orderId) {   
     	Resource<Order> resource = createResource(new Order(orderId));
     			
@@ -37,30 +37,39 @@ public class OrderController {
     }
   
     
-    @RequestMapping(method=RequestMethod.PUT, value="", produces="application/json")
+    @RequestMapping(method=RequestMethod.PUT, value="", produces="application/hal+json")
     public ResponseEntity<Resource<Order>> updateOrder(@RequestBody Order order ) {
-    	order.setLocation(new Location(order.getId()));
     	return new ResponseEntity<>(createResource(order),  HttpStatus.OK);
     }
     
-    @RequestMapping(method=RequestMethod.GET, value="/{id}/valid", produces="application/json")
-    public ResponseEntity<Resource<OrderValidity>> orderValid(@PathVariable("id") long orderId) {
-    	Order order = new Order(orderId);		
+    @RequestMapping(method=RequestMethod.POST, value="/orderValidation", produces="application/hal+json")
+    public ResponseEntity<Resource<OrderValidation>> orderValid(@RequestBody Order order) {		
     	
-    	Resource<OrderValidity> resource = new Resource<OrderValidity>(OrderValidator.validateOrder(order));
-    	resource.add(linkTo(methodOn(OrderController.class).orderValid(order.getId())).withSelfRel());
-    	resource.add(linkTo(methodOn(OrderController.class).get(order.getId())).withRel("order"));
+    	OrderValidation orderValidity = OrderValidator.validateOrder(order);
+    	
+    	Resource<OrderValidation> resource = new Resource<OrderValidation>(orderValidity);
+    	resource.add(linkTo(methodOn(OrderController.class).orderValid(order)).withSelfRel());
+    	
+    	return new ResponseEntity<>(resource, HttpStatus.OK);
+    }
+    
+    @RequestMapping(method=RequestMethod.GET, value="/orderValidation", produces="application/hal+json")
+    public ResponseEntity<Resource<OrderValidation>> getOrderValid(@RequestBody Order order) {		
+    	
+    	OrderValidation orderValidity = OrderValidator.validateOrder(order);
+    	
+    	Resource<OrderValidation> resource = new Resource<OrderValidation>(orderValidity);
+    	resource.add(linkTo(methodOn(OrderController.class).orderValid(order)).withSelfRel());
     	
     	return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
 
-	@RequestMapping(method=RequestMethod.GET, value="/{id}/location/valid", produces="application/json")
-    public ResponseEntity<Resource<LocationValidity>> locationValid(@PathVariable("id") long orderId) {
-    	Order order = new Order(orderId);
-    	
-    	Resource<LocationValidity> resource = new Resource<LocationValidity>(LocationValidator.validLocation(order.getLocation()));
-    	resource.add(linkTo(methodOn(OrderController.class).locationValid(order.getId())).withSelfRel());
+	@RequestMapping(method=RequestMethod.POST, value="/locationValidation", produces="application/hal+json")
+    public ResponseEntity<Resource<LocationValidity>> locationValid(@RequestBody Order order) {	
+        	
+    	Resource<LocationValidity> resource = new Resource<LocationValidity>(LocationValidator.validLocation(order));
+    	resource.add(linkTo(methodOn(OrderController.class).locationValid(order)).withSelfRel());
     	resource.add(linkTo(methodOn(OrderController.class).get(order.getId())).withRel("order"));
     	
     	return new ResponseEntity<>(resource, HttpStatus.OK);
@@ -70,8 +79,8 @@ public class OrderController {
 		Resource<Order> resource = new Resource<Order>(order);
 
     	resource.add(linkTo(methodOn(OrderController.class).get(order.getId())).withSelfRel());
-    	resource.add(linkTo(methodOn(OrderController.class).orderValid(order.getId())).withRel("validOrder"));
-    	resource.add(linkTo(methodOn(OrderController.class).locationValid(order.getId())).withRel("validLocation"));
+    	resource.add(linkTo(methodOn(OrderController.class).orderValid(order)).withRel("validOrder"));
+    	resource.add(linkTo(methodOn(OrderController.class).locationValid(order)).withRel("validLocation"));
 		return resource;
 	}  
 }
